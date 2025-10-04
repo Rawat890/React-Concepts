@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProductList } from "../store/productSlice";
 import Loader from "../commonComponents/Loader/Loader";
 import EmptyPlaceholder from "../commonComponents/EmptyPlaceholder/EmptyPlaceholder";
+import { addToCart } from "../store/cartSlice";
 
 function ProductList() {
   const {
@@ -36,7 +37,7 @@ function ProductList() {
               <img src={product.image} alt="Image-title" />
               <h2>{product.title}</h2>
               <p>Price: ${product.price}</p>
-              <button>Add to cart</button>
+              <button onClick={()=>dispatch(addToCart(product))}>Add to cart</button>
             </div>
           );
         })}
