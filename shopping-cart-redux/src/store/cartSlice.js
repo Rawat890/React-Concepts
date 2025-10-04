@@ -17,9 +17,10 @@ const cartSlice = createSlice({
     }else{
       state.itemsArray.push({...action.payload, quantity:1}) //to add on any data object that is clciked so that not override the previous one
     }
+    state.tempItemsArray= [...state.itemsArray]
+    state.totalPrice = state.itemsArray.reduce((acc, item)=>acc+item.price*item.quantity, 0)
     }
   }
-  
 })
 export const {addToCart} = cartSlice.actions;
 export default cartSlice.reducer;
