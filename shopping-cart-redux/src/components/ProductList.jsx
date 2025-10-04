@@ -1,7 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import NavBar from './NavBar'
 
 function ProductList() {
+  const fetchShopData = async()=>{
+    const response =  await fetch('https://dummyjson.com/products');
+    const data = await response.json();
+    console.log(data);
+  }
+
+  useEffect(()=>{
+   fetchShopData()
+  },[])
+  
   return (
     <>
     <NavBar/>
