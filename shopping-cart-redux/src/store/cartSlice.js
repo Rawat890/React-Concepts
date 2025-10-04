@@ -11,7 +11,12 @@ const cartSlice = createSlice({
   initialState,
   reducers:{  //action creators
   addToCart: (state, action) => {
-    alert('hey')
+    const existingItem = state.itemsArray.find((item)=>item.id===action.payload.id)
+    if (existingItem) {
+      existingItem.quantity += 1
+    }else{
+      state.itemsArray.push({...action.payload, quantity:1}) //to add on any data object that is clciked so that not override the previous one
+    }
     }
   }
   
