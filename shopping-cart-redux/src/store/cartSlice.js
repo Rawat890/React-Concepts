@@ -19,8 +19,12 @@ const cartSlice = createSlice({
     }
     state.tempItemsArray= [...state.itemsArray]
     state.totalPrice = state.itemsArray.reduce((acc, item)=>acc+item.price*item.quantity, 0)
-    }
-  }
+    },
+    removeFromCart: (state, action) => {
+    state.itemsArray = state.itemsArray.filter(item => item.id!==action.payload) //as in payload we are passing the id 
+    state.tempItemsArray = [...state.itemsArray];
+    },
+  },
 })
-export const {addToCart} = cartSlice.actions;
+export const {addToCart, removeFromCart} = cartSlice.actions;
 export default cartSlice.reducer;
