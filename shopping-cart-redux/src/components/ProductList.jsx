@@ -1,26 +1,38 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import NavBar from "./NavBar";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProductList } from "../store/productSlice";
+import Loader from "../commonComponents/Loader/Loader";
+import EmptyPlaceholder from "../commonComponents/EmptyPlaceholder/EmptyPlaceholder";
 
 function ProductList() {
-  const [products, setProducts] = useState([]);
-
-  const fetchShopData = async () => {
-    const response = await fetch("https://fakestoreapi.com/products");
-    const data = await response.json();
-    console.log(data);
-    setProducts(data);
-  };
+  const {
+    items: products,
+    loading,
+    status,
+  } = useSelector((state) => state.products);
+  const dispatch = useDispatch(); //for dispatching products/fetchProducts
 
   useEffect(() => {
-    fetchShopData();
-  }, []);
+    if (status === "idle") {
+      dispatch(fetchProductList());
+    }
+  }, [dispatch, status]);
+
+  if (status === "loading") {
+    return <Loader loading={loading} />;
+  }
+  if (status === "failed") {
+    return <EmptyPlaceholder/>
+  }
 
   return (
     <>
       <NavBar />
       <div className="product-list">
         {products.map((product) => {
-          return(<div className="product-card" key={product.id}>
+          return (
+            <div className="product-card" key={product.id}>
               <img src={product.image} alt="Image-title" />
               <h2>{product.title}</h2>
               <p>Price: ${product.price}</p>
