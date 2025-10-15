@@ -25,3 +25,13 @@ Each field only subscribes to its own updates.
 
 If one field changes, only that field is updated — not the whole form.
 watch('email') // only re-renders when 'email' changes
+
+3. No re-render unless necessary
+
+useForm doesn't cause re-render unless:
+
+Validation status changes
+
+You explicitly call watch(), setValue(), etc.
+
+Formik, by contrast, uses React state for everything, so even changing one character can re-render every field unless carefully memoized.
